@@ -51,8 +51,32 @@ public class FoodController {
     @FXML
     void doCammino(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Cerco cammino peso massimo...");
+    	
+    	
+    	try {
+    		txtResult.appendText("Cerco cammino peso massimo...\n");
+    		
+	    	Integer passi = Integer.valueOf(this.txtPassi.getText());
+	    	
+	    	String sorgente = this.boxPorzioni.getValue();
+	    	
+	    	List<String> cammino = model.cercaCammino(sorgente, passi);
+	    	
+	    	if(cammino.size()>0) {
+		    	for(String s : cammino) {
+		    		this.txtResult.appendText(s+"\n");
+		    	}
+		    	this.txtResult.appendText("\n\nPeso cammino: "+model.pesoMax());
+	    	}else {
+	    		this.txtResult.appendText("Cammino non trovato");
+	    	}
+	    	
+	    	
+    	}catch(NumberFormatException nfe) {
+    		this.txtResult.appendText("Inserisci valore corretto");
+    	}
     }
+    	
 
     @FXML
     void doCorrelate(ActionEvent event) {
